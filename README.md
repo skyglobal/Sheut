@@ -1,6 +1,8 @@
-Screenshots (with [Cairo](http://cairographics.org/))
+Sheut
 ==============
-
+ 
+ >  NodeJS regression testing with [Cairo](http://cairographics.org/)
+ 
 # Getting Started
 
 ## Dependencies
