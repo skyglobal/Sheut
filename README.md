@@ -10,7 +10,7 @@ Server-side Screenshots with [Cairo](http://cairographics.org/)
 
 ## Installation
 
- * `npm install sheut`
+ * `npm install --save-dev sheut`
  * `./node_modules/sheut/scripts/install-cairo.sh`
 
 ## Gulp Example
