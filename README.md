@@ -1,4 +1,4 @@
-Server-side Screenshots with [Cairo](http://cairographics.org/)
+Screenshots (with [Cairo](http://cairographics.org/))
 ==============
 
 # Getting Started
@@ -7,11 +7,11 @@ Server-side Screenshots with [Cairo](http://cairographics.org/)
 
  * [PhantomJS](http://phantomjs.org/) `npm i -g phantomjs`
  * [CasperJS](http://casperjs.org/) `npm i -g casperjs`
+ * [Cairo](http://cairographics.org/) `./node_modules/sheut/scripts/install-cairo.sh`
 
-## Installation
+## Installing
 
  * `npm install --save-dev sheut`
- * `./node_modules/sheut/scripts/install-cairo.sh`
 
 ## Gulp Example
 
