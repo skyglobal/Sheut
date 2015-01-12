@@ -1,5 +1,5 @@
 {
-  "name": "Sheut",
+  "name": "sheut",
   "version": "0.0.1",
   "description": "Take and Compare screenshots",
   "main": "index.js",
@@ -14,6 +14,17 @@
     "url": "https://github.com/skyglobal/sheut/issues"
   },
   "homepage": "https://github.com/skyglobal/sheut",
+  "files": [
+    "LICENSE.md",
+    "README.md",
+    "CHANGELOG.md",
+    "index.js",
+    "casper.js",
+    "sheut.config.js",
+    "wrappers",
+    "scripts",
+    "paths"
+  ],
   "dependencies": {
     "canvas": "^1.1.6",
     "casper": "^0.1.1",
