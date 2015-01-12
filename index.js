@@ -22,19 +22,21 @@ var paths = require('./paths')(config);
 
 
 
-function capture(){
+function capture(cb){
     clean();
     if (config.server){
         var testServer = server.start(config.server.dir, config.server.port);
     }
-    return nodeCasper(['casper.js', '--config=' + configPath]).then(function(result){
+    nodeCasper(['casper.js', '--config=' + configPath]).then(function(result){
         testServer && testServer.close();
+        cb && cb();
     });
 }
 
-function accept(){
+function accept(cb){
     fse.copy(paths.new, paths.reference, function(err){
         if (err) return console.error(err)
+        cb && cb();
     })
 }
 
