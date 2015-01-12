@@ -91,8 +91,6 @@ function compare(cb){
     });
 }
 
-capture()
-
 module.exports = {
     capture: capture,
     accept: accept,
