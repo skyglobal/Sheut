@@ -1,5 +1,6 @@
 'use strict';
 var findup = require('findup-sync');
+var gutil = require('gulp-util');
 var casperPath = findup('node_modules/sheut/casper.js') || './casper.js';
 var pathsPath = findup('node_modules/sheut/paths/index.js') || './paths/index.js';
 var configPath = findup('./sheut.config.js');
@@ -82,16 +83,18 @@ function compare(cb){
             });
         });
 
+
         if (err){
-            console.log(err);
-            process.exit(1);
+            var existingError = new Error(err);
+            err = new gutil.PluginError('Sheut: ', existingError, {showStack: true});
         }
         if (errors.length > 0) {
-            console.log(errors.join('\n'))
+            var existingError = new Error(errors.join('\n'));
+            err = new gutil.PluginError('Sheut: ', existingError, {showStack: true});
         } else {
             console.log('All reference shots match the new images');
-            cb && cb();
         }
+        cb && cb(err);
     });
 }
 
