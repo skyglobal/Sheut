@@ -1,6 +1,8 @@
 Server-side Screenshots with [Cairo](http://cairographics.org/)
 ==============
 
+# Getting Started
+
 ## Dependencies
 
  * [PhantomJS](http://phantomjs.org/) `npm i -g phantomjs`
@@ -8,9 +10,32 @@ Server-side Screenshots with [Cairo](http://cairographics.org/)
 
 ## Installation
 
-`./install-cairo.sh`
+ * `npm install sheut`
+ * `./node_modules/sheut/scripts/install-cairo.sh`
 
-#### Glib Error
+## Gulp Example
+
+```
+var gulp = require('gulp');
+var sheut = require('sheut');
+
+gulp.task('screenshot:capture', function(cb){
+    return sheut.capture(cb);
+});
+
+
+gulp.task('screenshot:accept', function(cb){
+    return sheut.accept(cb);
+});
+
+gulp.task('screenshot:compare', function(cb){
+    return sheut.compare(cb);
+});
+```
+
+#Installation Problems
+
+### Glib Error
 
 You may get  a `glib` error with pkg-config. if so sort this out with :
 ```
@@ -22,7 +47,7 @@ cd ..
 ./install.sh
 ```
 
-#### freetype Error
+### freetype Error
 
 You may get a `freetype` error. do this:
 ```
@@ -31,7 +56,7 @@ rm /usr/local/lib/libfreetype.6.dylib;
 ln -s /opt/X11/lib/libfreetype.6.dylib  /usr/local/lib/libfreetype.6.dylib;
 ```
 
-#### libPNG Error
+### libPNG Error
 
 You may get a `libpng` error. do this:
 ```
