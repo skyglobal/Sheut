@@ -1,0 +1,33 @@
+{
+  "name": "Sheut",
+  "version": "0.0.1",
+  "description": "Take and Compare screenshots",
+  "main": "index.js",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:skyglobal/Sheut.git"
+  },
+  "author": "Peter Moualnd <peter.mouland@gmail.com>",
+  "license": "BSD3",
+  "bugs": {
+    "url": "https://github.com/skyglobal/sheut/issues"
+  },
+  "homepage": "https://github.com/skyglobal/sheut",
+  "dependencies": {
+    "canvas": "^1.1.6",
+    "casper": "^0.1.1",
+    "del": "^1.1.1",
+    "es6-promisify": "^1.1.1",
+    "finalhandler": "^0.3.3",
+    "findup-sync": "^0.2.1",
+    "fs-extra": "^0.14.0",
+    "gulp-util": "^3.0.2",
+    "image-type": "^2.0.1",
+    "mkdirp": "^0.5.0",
+    "resemblejs": "1.2.0",
+    "serve-index": "^1.6.0",
+    "serve-static": "^1.8.0"
+  },
+  "devDependencies": {}
+}
