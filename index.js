@@ -27,7 +27,7 @@ function capture(){
     if (config.server){
         var testServer = server.start(config.server.dir, config.server.port);
     }
-    return nodeCasper(['casper.js']).then(function(result){
+    return nodeCasper(['casper.js', '--config=' + configPath]).then(function(result){
         testServer && testServer.close();
     });
 }

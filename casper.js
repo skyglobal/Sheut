@@ -1,10 +1,6 @@
-
 var casper = require('casper').create();
-var findup = require('findup-sync');
-var configPath = findup('./sheut.config.js');
-var config = require(configPath);
+var config = require(casper.cli.options.config || './sheut.config.js');
 var paths = require('./paths')(config);
-
 var sites = {};
 var imageToCapture = '';
 var lastViewport = config.viewports.length;
