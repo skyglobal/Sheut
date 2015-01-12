@@ -43,7 +43,7 @@ casper.start().each(urls, function(self, link) {
                     self.waitForSelector(selector, (function() {
                         imageToCapture = createImageName(site.name, selector, viewport.name);
                         console.log("Saved screenshot " + imageToCapture);
-                        self.captureSelector(paths.new + imageToCapture, selector);
+                        self.captureSelector(paths.new + '/' + imageToCapture, selector);
                     }), (function() {
                         self.die("Timeout reached. Fail whale?");
                         self.exit();

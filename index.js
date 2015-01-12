@@ -1,5 +1,6 @@
 'use strict';
 var findup = require('findup-sync');
+var casperPath = findup('node_modules/sheut/casper.js') || './casper.js';
 var configPath = findup('./sheut.config.js');
 if (!configPath) {
     console.log('Please add a sheut.config.js file in your root.');
@@ -21,20 +22,20 @@ var server = require('./wrappers/server');
 var paths = require('./paths')(config);
 
 
-
 function capture(cb){
-    clean();
-    if (config.server){
-        var testServer = server.start(config.server.dir, config.server.port);
-    }
-    nodeCasper(['casper.js', '--config=' + configPath]).then(function(result){
-        testServer && testServer.close();
-        cb && cb();
+    return clean(function(){
+        if (config.server){
+            var testServer = server.start(config.server.dir, config.server.port);
+        }
+        nodeCasper([casperPath, '--config=' + configPath]).then(function(result){
+            testServer && testServer.close();
+            cb && cb();
+        });
     });
 }
 
 function accept(cb){
-    fse.copy(paths.new, paths.reference, function(err){
+    return fse.copy(paths.new, paths.reference, function(err){
         if (err) return console.error(err)
         cb && cb();
     })
