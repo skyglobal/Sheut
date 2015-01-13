@@ -21,17 +21,21 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
 var gulp = require('gulp');
 var sheut = require('sheut');
 
-gulp.task('screenshot:capture', function(cb){
-    return sheut.capture(cb);
+gulp.task('sheut:accept', function(cb){
+    return sheut.accept.then(function(){
+        cb()
+    });
 });
 
-
-gulp.task('screenshot:accept', function(cb){
-    return sheut.accept(cb);
-});
-
-gulp.task('screenshot:compare', function(cb){
-    return sheut.compare(cb);
+gulp.task('sheut', function(cb){
+    return sheut.capture()
+        .then(function(){
+            return sheut.compare();
+        }).then(function onSuccess(){
+            cb();
+        }, function onError(err){
+            gulp.emit("error", err)
+        });
 });
 ```
 
