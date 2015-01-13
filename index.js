@@ -85,7 +85,8 @@ function compareAndSaveDifference(file){
             var errors = imageErrors(imgDiff, data);
             if (errors.length){
                 saveDifference(imgDiff, data).then(function(){
-                    reject(errors);
+                    var err = new gutil.PluginError('Sheut: ', errors.join('\n'), {showStack: false})
+                    reject(err);
                 });
             } else {
                 resolve();
