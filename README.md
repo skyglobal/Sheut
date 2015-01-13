@@ -25,7 +25,7 @@ var gulp = require('gulp');
 var sheut = require('sheut');
 
 gulp.task('sheut:accept', function(cb){
-    return sheut.accept.then(function(){
+    return sheut.accept().then(function(){
         cb()
     });
 });
@@ -41,3 +41,9 @@ gulp.task('sheut', function(cb){
         });
 });
 ```
+
+
+### todo:
+ * integrate into existing tests
+ * cross browser remotely
+ 
