@@ -42,6 +42,14 @@ casper.start().each(urls, function(self, link) {
             //});
             //this.then(function(){
             this.then(function(){
+                this.each(site.hideSelectors, function(self, selector){
+                    this.evaluate(function() {
+                        var elsToHide = document.querySelectorAll('.skycon');
+                        for (var el in elsToHide){
+                            elsToHide[el].setAttribute('style','visibility:hidden');
+                        }
+                    });
+                });
 
                 this.each(site.selectors, function(self, selector){
 
@@ -63,6 +71,10 @@ casper.on('capture.saved', function(err) {
     if (imageToCapture === lastImageToCapture){
         this.exit()
     }
+});
+
+casper.on('remote.message', function(msg) {
+    this.echo('remote message caught: ' + msg);
 });
 
 casper.run();

@@ -35,7 +35,6 @@ function capture(){
             if (config.server){
                 testServer = server.start(config.server.dir, config.server.port);
             }
-            console.log('casperjs ', casperConfig.join(' '));
             nodeCasper(casperConfig).then(function(result){
                 testServer && testServer.close();
                 resolve();
