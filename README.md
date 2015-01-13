@@ -1,4 +1,4 @@
-Sheut
+Sheut [![NPM version](http://img.shields.io/npm/v/Sheut.svg)](https://www.npmjs.org/package/Sheut)
 ==============
  
  >  NodeJS regression testing with [Cairo](http://cairographics.org/)
