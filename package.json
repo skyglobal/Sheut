@@ -29,6 +29,7 @@
     "canvas": "^1.1.6",
     "casper": "^0.1.1",
     "del": "^1.1.1",
+    "es6-promise": "^2.0.1",
     "es6-promisify": "^1.1.1",
     "finalhandler": "^0.3.3",
     "findup-sync": "^0.2.1",

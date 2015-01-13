@@ -78,7 +78,6 @@ function saveDifference(file, data){
 
 function compareAndSaveDifference(file){
     return new Promise(function(resolve, reject){
-        var errors = [];
         var img1 = fs.readFileSync(file);
         var img2 = fs.readFileSync(file.replace('/reference/', '/new/'));
         var imgDiff = file.replace('/reference/', '/different/');
