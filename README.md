@@ -7,9 +7,9 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
 
 ## Dependencies
 
- * [PhantomJS](http://phantomjs.org/) `npm i -g phantomjs`
+ * [PhantomJS 2](http://phantomjs.org/build.html) *follow instructions*
  * [CasperJS](http://casperjs.org/) `npm i -g casperjs`
- * [XQuartz](https://xquartz.macosforge.org/landing/) (for mac's)
+ * [XQuartz](https://xquartz.macosforge.org/landing/) (Mac's only)
  * [Cairo](http://cairographics.org/) `brew install cairo`
 
 ## Installing
