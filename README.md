@@ -17,6 +17,7 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
  * `export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig`
  * `npm install --save-dev sheut`
  * Create a [config file](sheut.config.js)
+   * If you would like to start the server yourself, you can remove the `server` object;
 
 ## Gulp Example
 
