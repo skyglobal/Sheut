@@ -1,4 +1,5 @@
 'use strict';
+var Promise = require('es6-promise').Promise;
 var findup = require('findup-sync');
 var gutil = require('gulp-util');
 var casperPath = findup('node_modules/sheut/casper.js') || './casper.js';
@@ -24,77 +25,111 @@ var server = require('./wrappers/server');
 var paths = require(pathsPath)(config);
 
 
-function capture(cb){
-    return clean(function(){
-        if (config.server){
-            var testServer = server.start(config.server.dir, config.server.port);
-        }
-        nodeCasper([casperPath, '--config=' + configPath, '--paths=' + pathsPath]).then(function(result){
-            testServer && testServer.close();
-            cb && cb();
+function capture(){
+    return clean().then(function(){
+        return new Promise(function(resolve, reject){
+            if (config.server){
+                var testServer = server.start(config.server.dir, config.server.port);
+            }
+            nodeCasper([casperPath, '--config=' + configPath, '--paths=' + pathsPath]).then(function(result){
+                testServer && testServer.close();
+                resolve();
+            });
+        });
+    });
+};
+
+function accept(cb){
+    return new Promise(function(resolve, reject){
+        fse.copy(paths.new, paths.reference, function(err){
+            if (err) return reject(err)
+            resolve();
+        })
+    });
+}
+
+
+function clean(){
+    return new Promise(function(resolve, reject){
+        del([paths.new, paths.different], function(){
+            resolve()
         });
     });
 }
 
-function accept(cb){
-    return fse.copy(paths.new, paths.reference, function(err){
-        if (err) return console.error(err)
-        cb && cb();
-    })
-}
+function findFiles(dir){
+    return new Promise(function(resolve, reject){
+        execFile('find', [ dir ], function(err, stdout, stderr) {
+            resolve(stdout);
+        });
+    });
+};
 
+function saveDifference(file, data){
+    return new Promise(function(resolve, reject){
+        mkdirp(paths.different, function (){
+            var base64 = data.getImageDataUrl().replace(/^data:image\/png;base64,/, "");
+            fs.writeFile(file, base64, {encoding:'base64'}, function(){
+                resolve()
+            });
+        });
+    });
+};
 
-function clean(cb){
-    return del([paths.new, paths.different], cb);
-}
-
-function compare(cb){
-    execFile('find', [ paths.reference ], function(err, stdout, stderr) {
+function compareAndSaveDifference(file){
+    return new Promise(function(resolve, reject){
         var errors = [];
-        var file_list = stdout.split('\n');
+        var img1 = fs.readFileSync(file);
+        var img2 = fs.readFileSync(file.replace('/reference/', '/new/'));
+        var imgDiff = file.replace('/reference/', '/different/');
+        var api = resemble(img2).compareTo(img1).onComplete(function(data){
+            var errors = imageErrors(imgDiff, data);
+            if (errors.length){
+                saveDifference(imgDiff, data).then(function(){
+                    reject(errors);
+                });
+            } else {
+                resolve();
+            }
+        });
+    });
+}
+
+function imageErrors(file, data){
+    var errors = [];
+    if (!data.isSameDimensions) {
+        if (data.dimensionDifference.width !== 0) {
+            errors.push('the new image is wider/smaller: ' + data.dimensionDifference.width + 'px different');
+        }
+        if (data.dimensionDifference.height !== 0) {
+            errors.push('the new image is taller/smaller: ' + data.dimensionDifference.height + 'px different');
+        }
+        errors.push(file)
+    }
+    if (data.misMatchPercentage > 0) {
+        errors.push('The new image content has changed: ' + data.misMatchPercentage + '% different');
+        errors.push(file)
+    }
+    return errors;
+}
+
+
+function compare(){
+    return findFiles(paths.reference).then(function(files){
+        var promises = [];
+        var file_list = files.split('\n');
         file_list.shift();
         file_list.pop();
         file_list.forEach(function(file){
-            var img1 = fs.readFileSync(file);
-            var img2 = fs.readFileSync(file.replace('/reference/', '/new/'));
-            var imgDiff = file.replace('/reference/', '/different/');
-            var api = resemble(img2).compareTo(img1).onComplete(function(data){
-                if (!data.isSameDimensions) {
-                    if (data.dimensionDifference.width !== 0) {
-                        errors.push('the new image is wider/smaller: ' + data.dimensionDifference.width + 'px different');
-                    }
-                    if (data.dimensionDifference.height !== 0) {
-                        errors.push('the new image is taller/smaller: ' + data.dimensionDifference.height + 'px different');
-                    }
-                    errors.push(file)
-                }
-                if (data.misMatchPercentage > 0) {
-                    errors.push('The new image content has changed: ' + data.misMatchPercentage + '% different');
-                    errors.push(file)
-                }
-                if (data.misMatchPercentage > 0 || !data.isSameDimensions){
-                    mkdirp(paths.different, function saveDifference(){
-                        var base64 = data.getImageDataUrl().replace(/^data:image\/png;base64,/, "");
-                        fs.writeFile(imgDiff, base64, {encoding:'base64'}, function(){
-                            //process.exit(1);
-                        });
-                    });
-                }
-            });
+            promises.push(compareAndSaveDifference(file));
         });
 
-
-        if (err){
-            var existingError = new Error(err);
-            err = new gutil.PluginError('Sheut: ', existingError, {showStack: true});
-        }
-        if (errors.length > 0) {
-            var existingError = new Error(errors.join('\n'));
-            err = new gutil.PluginError('Sheut: ', existingError, {showStack: true});
+        if (promises.length > 0) {
+            return Promise.all(promises)
         } else {
             console.log('All reference shots match the new images');
+            return new Promise;
         }
-        cb && cb(err);
     });
 }
 
