@@ -1,6 +1,5 @@
 var casper = require('casper').create();
-var config = require(casper.cli.options.config || './sheut.config.js');
-var paths = require(casper.cli.options.paths || './paths')(config);
+var config = require('../../sheut.config.js'); //grrr casper.cli.options.config || 
 var sites = {};
 var imageToCapture = '';
 var lastViewport = config.viewports.length;
@@ -11,6 +10,12 @@ var urls = config.sites.map(function(site){
     sites[site.url] = site;
     return site.url;
 });
+
+var paths = {
+    new: config.screenshots + '/new',
+    different: config.screenshots + '/different',
+    reference: config.screenshots + '/reference'
+};
 
 function slugize(name){
     return name.replace(' ', '-').replace('\\','').replace('/','');
@@ -31,11 +36,11 @@ casper.start().each(urls, function(self, link) {
 
         this.thenOpen(link, function() {
 
-        //may need to do this if site has JS changing the page on load.
-        //    better to hook into browser events or something
-        //    this.wait(5000);
-        //});
-        //this.then(function(){
+            //may need to do this if site has JS changing the page on load.
+            //    better to hook into browser events or something
+            //    this.wait(5000);
+            //});
+            //this.then(function(){
             this.then(function(){
 
                 this.each(site.selectors, function(self, selector){

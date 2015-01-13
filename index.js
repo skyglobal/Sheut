@@ -3,7 +3,6 @@ var Promise = require('es6-promise').Promise;
 var findup = require('findup-sync');
 var gutil = require('gulp-util');
 var casperPath = findup('node_modules/sheut/casper.js') || './casper.js';
-var pathsPath = findup('node_modules/sheut/paths/index.js') || './paths/index.js';
 var configPath = findup('./sheut.config.js');
 if (!configPath) {
     console.log('Please add a sheut.config.js file in your root.');
@@ -22,16 +21,22 @@ var execFile = child_process.execFile;
 var resemble = require('./wrappers/resemble');
 var nodeCasper = require('./wrappers/casper');
 var server = require('./wrappers/server');
-var paths = require(pathsPath)(config);
-
+var paths = {
+    new: config.screenshots + '/new',
+    different: config.screenshots + '/different',
+    reference: config.screenshots + '/reference'
+};
 
 function capture(){
     return clean().then(function(){
         return new Promise(function(resolve, reject){
+            var testServer;
+            var casperConfig = [casperPath, '--config=' + configPath];
             if (config.server){
-                var testServer = server.start(config.server.dir, config.server.port);
+                testServer = server.start(config.server.dir, config.server.port);
             }
-            nodeCasper([casperPath, '--config=' + configPath, '--paths=' + pathsPath]).then(function(result){
+            console.log('casperjs ', casperConfig.join(' '));
+            nodeCasper(casperConfig).then(function(result){
                 testServer && testServer.close();
                 resolve();
             });
@@ -128,7 +133,7 @@ function compare(){
             return Promise.all(promises)
         } else {
             console.log('All reference shots match the new images');
-            return new Promise;
+            return new Promise(function(resolve, reject){resolve();});
         }
     });
 }
