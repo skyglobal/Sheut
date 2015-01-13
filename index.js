@@ -74,7 +74,7 @@ function saveDifference(file, data){
             });
         });
     });
-};
+}
 
 function compareAndSaveDifference(file){
     return new Promise(function(resolve, reject){
