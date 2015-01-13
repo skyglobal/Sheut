@@ -2,7 +2,7 @@
 var Promise = require('es6-promise').Promise;
 var findup = require('findup-sync');
 var gutil = require('gulp-util');
-var casperPath = findup('node_modules/sheut/casper.js') || './casper.js';
+var casperPath = findup('node_modules/sheut/casper.js' || './casper.js');
 var configPath = findup('./sheut.config.js');
 if (!configPath) {
     console.log('Please add a sheut.config.js file in your root.');
@@ -28,25 +28,23 @@ var paths = {
 };
 
 function capture(){
-    return clean().then(function(){
-        return new Promise(function(resolve, reject){
-            var testServer;
-            var casperConfig = [casperPath, '--config=' + configPath];
+    var testServer;
+    return clean()
+        .then(function startCasper(){
             if (config.server){
                 testServer = server.start(config.server.dir, config.server.port);
             }
-            nodeCasper(casperConfig).then(function(result){
-                testServer && testServer.close();
-                resolve();
-            });
+            return nodeCasper([casperPath, '--configPath=' + configPath])
+        })
+        .then(function closeServer(){
+            testServer && testServer.close();
         });
-    });
 };
 
 function accept(cb){
     return new Promise(function(resolve, reject){
         fse.copy(paths.new, paths.reference, function(err){
-            if (err) return reject(err)
+            if (err) return reject(err);
             resolve();
         })
     });
@@ -71,7 +69,7 @@ function findFiles(dir){
 
 function saveDifference(file, data){
     return new Promise(function(resolve, reject){
-        mkdirp(paths.different, function (){
+        mkdirp(paths.different, function saveFile(){
             var base64 = data.getImageDataUrl().replace(/^data:image\/png;base64,/, "");
             fs.writeFile(file, base64, {encoding:'base64'}, function(){
                 resolve()

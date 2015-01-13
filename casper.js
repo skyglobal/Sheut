@@ -1,5 +1,6 @@
 var casper = require('casper').create();
-var config = require('../../sheut.config.js'); //grrr casper.cli.options.config || 
+var config = require(casper.cli.options.configPath || '../../sheut.config.js');
+
 var sites = {};
 var imageToCapture = '';
 var lastViewport = config.viewports.length;
