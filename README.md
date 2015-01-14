@@ -1,7 +1,7 @@
 Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.org/package/sheut)
 ==============
  
- >  **Currently Doesnt work well with Circle CI due to Phantom webfont problems**
+ >  **To work with Circle CI, local PhantomJS must be webfont build**
 
  >  NodeJS regression testing with [Cairo](http://cairographics.org/)
  
