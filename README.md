@@ -43,18 +43,18 @@ var gulp = require('gulp');
 var sheut = require('sheut');
 
 gulp.task('clean', function(cb){
-    return sheut.clean()
+    return sheut.clean();
 });
 
-gulp.task('capture', function(cb){
-    return sheut.capture()
+gulp.task('capture', ['clean'], function(cb){
+    return sheut.capture();
 });
 
 gulp.task('accept', function(cb){
-    return sheut.accept()
+    return sheut.accept();
 });
 
-gulp.task('compare', function(cb){
+gulp.task('compare', ['capture'], function(cb){
     return sheut.compare()
         .then(function onSuccess(){
         }, function onError(err){
