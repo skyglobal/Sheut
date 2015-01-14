@@ -27,9 +27,9 @@ var paths = {
     reference: config.screenshots + '/reference'
 };
 
-function serve(server){
-    if (!server) return;
-    return server.start(config.server.dir, config.server.port);
+function serve(config){
+    if (!config) return;
+    return server.start(config.dir, config.port);
 }
 
 function capture(){
