@@ -33,18 +33,13 @@ function serve(config){
 }
 
 function capture(){
-    var testServer;
-    return clean()
-        .then(function startCasper(){
-            testServer = serve(config.server);
-            return nodeCasper([casperPath, '--configPath=' + configPath])
-        })
-        .then(function closeServer(){
-            testServer && testServer.close();
-        });
+    var testServer = serve(config.server);
+    return nodeCasper([casperPath, '--configPath=' + configPath]).then(function closeServer(){
+        return testServer && testServer.close();
+    });
 }
 
-function accept(cb){
+function accept(){
     return new Promise(function(resolve, reject){
         fse.copy(paths.new, paths.reference, function(err){
             if (err) return reject(err);
@@ -129,18 +124,13 @@ function compare(){
             promises.push(compareAndSaveDifference(file));
         });
 
-        if (promises.length > 0) {
-            return Promise.all(promises)
-        } else {
-            console.log('All reference shots match the new images');
-            return new Promise(function(resolve, reject){resolve();});
-        }
+        return Promise.all(promises)
     });
 }
 
 module.exports = {
+    clean: clean,
     capture: capture,
     accept: accept,
-    compare: compare,
-    serve: compare
+    compare: compare
 };
