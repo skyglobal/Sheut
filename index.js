@@ -27,19 +27,22 @@ var paths = {
     reference: config.screenshots + '/reference'
 };
 
+function serve(server){
+    if (!server) return;
+    return server.start(config.server.dir, config.server.port);
+}
+
 function capture(){
     var testServer;
     return clean()
         .then(function startCasper(){
-            if (config.server){
-                testServer = server.start(config.server.dir, config.server.port);
-            }
+            testServer = serve(config.server);
             return nodeCasper([casperPath, '--configPath=' + configPath])
         })
         .then(function closeServer(){
             testServer && testServer.close();
         });
-};
+}
 
 function accept(cb){
     return new Promise(function(resolve, reject){
@@ -65,7 +68,7 @@ function findFiles(dir){
             resolve(stdout);
         });
     });
-};
+}
 
 function saveDifference(file, data){
     return new Promise(function(resolve, reject){
@@ -138,5 +141,6 @@ function compare(){
 module.exports = {
     capture: capture,
     accept: accept,
-    compare: compare
+    compare: compare,
+    serve: compare
 };
