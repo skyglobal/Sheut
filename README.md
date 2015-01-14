@@ -20,7 +20,7 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
  
 ## sheut.config.js 
 
- * `server` : Having the `server` forces Sheut to start a static server before capturing screenshots. If you remove this option, you must start the server yourselves.
+ * `server` : If provided Sheut will start a static server using the dir and port given. If omitted, Sheut will assume the server has already been started.
    * `dir`: The location of the site to serve.
    * `port`: the port to open the server on.
  * `screenshots` : The directory where to save the captured screens.
