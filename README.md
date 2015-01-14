@@ -17,7 +17,22 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
  * `export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig`
  * `npm install --save-dev sheut`
  * Create a [config file](sheut.config.js)
-   * If you would like to start the server yourself, you can remove the `server` object;
+ 
+## Sheut.config.js 
+
+ * **server** : Having the `server` forces Sheut to start a static server before capturing screenshots. If you remove this option, you must start the server yourselves.
+   * `dir`: The location of the site to serve.
+   * `port`: the port to open the server on.
+ * **screenshots** : The directory where to save the captured screens.
+ * **viewport** An array of sizes to test the give sites at.
+   * `name` : Used to categorise the url and used in the filename of the save screen-shots.
+   * `height` : The height of the browser.
+   * `width` : The width of the browser.
+ * **sites** : An array of URLs to test.
+   * `name` : Used to categorise the url and used in the filename of the save screen-shots.
+   * `url` : The url to test
+   * `hideSelectors` : An array of selectors to hide (visibility:hidden)
+   * `selectors` : An array of selectors to take test.  Saved screenshots will be trimmed to show only this selector.
 
 ## Gulp Example
 
@@ -42,6 +57,7 @@ gulp.task('sheut', function(cb){
         });
 });
 ```
+
 
 
 ### todo:
