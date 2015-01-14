@@ -1,7 +1,7 @@
 Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.org/package/sheut)
 ==============
  
- >  **Project Parked until PhantomJS 2.0 is released**
+ >  **Currently Doesnt work well with Circle CI due to Phantom webfont problems**
 
  >  NodeJS regression testing with [Cairo](http://cairographics.org/)
  
