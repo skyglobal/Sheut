@@ -1,6 +1,8 @@
 Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.org/package/sheut)
 ==============
  
+ >  **Project Parked until PhantomJS 2.0 is released**
+
  >  NodeJS regression testing with [Cairo](http://cairographics.org/)
  
 # Getting Started
@@ -58,8 +60,22 @@ gulp.task('sheut', function(cb){
 });
 ```
 
+## CircleCI Example
+```
+test:
+  pre:
+    - npm install -g gulp
+    - gulp build
+  override:
+    - gulp test
+    - gulp sheut
+dependencies:
+  post:
+    - npm install -g casperjs@1.1.0-beta3
+```
 
 
 ### todo:
+ * move remotely built screen-shots to aws on fail
  * integrate into existing tests
  * cross browser remotely
