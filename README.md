@@ -20,15 +20,15 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
  
 ## sheut.config.js 
 
- * `server` : If provided Sheut will start a static server using the dir and port given. If omitted, Sheut will assume the server has already been started.
+ * `server` : (optional) If provided Sheut will start a static server using the dir and port given. If omitted, Sheut will assume the server has already been started.
    * `dir`: The location of the site to serve.
    * `port`: the port to open the server on.
- * `screenshots` : The directory where to save the captured screens.
- * `viewport` An array of sizes to test the give sites at.
+ * `screenshots` : (mandatory) The directory where to save the captured screens.
+ * `viewport` : (mandatory) An array of sizes to test the give sites at.
    * `name` : Used to categorise the url and used in the filename of the save screen-shots.
    * `height` : The height of the browser.
    * `width` : The width of the browser.
- * `sites` : An array of URLs to test.
+ * `sites` : (mandatory) An array of URLs to test.
    * `name` : Used to categorise the url and used in the filename of the save screen-shots.
    * `url` : The url to test
    * `hideSelectors` : An array of selectors to hide (visibility:hidden)
