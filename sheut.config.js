@@ -41,5 +41,10 @@ module.exports = {
                 ,".share__popup .share__summary"
             ]
         }
-    ]
+    ],
+    thresholds: {
+        misMatchPercentage: 0,
+        height: 0,
+        width: 0
+    }
 }

@@ -2,7 +2,7 @@
 var Promise = require('es6-promise').Promise;
 var findup = require('findup-sync');
 var gutil = require('gulp-util');
-var casperPath = findup('node_modules/sheut/casper.js' || './casper.js');
+var casperPath = findup('node_modules/sheut/casper.js');
 var configPath = findup('./sheut.config.js');
 if (!configPath) {
     console.log('Please add a sheut.config.js file in your root.');
@@ -20,21 +20,22 @@ var exec = child_process.exec;
 var execFile = child_process.execFile;
 var resemble = require('./wrappers/resemble');
 var nodeCasper = require('./wrappers/casper');
-var server = require('./wrappers/server');
+var staticServer = require('./wrappers/server');
 var paths = {
     new: config.screenshots + '/new',
     different: config.screenshots + '/different',
     reference: config.screenshots + '/reference'
 };
+var thresholds = config.thresholds || { };
 
-function serve(config){
-    if (!config) return;
-    return server.start(config.dir, config.port);
+function serve(server){
+    if (!server) return;
+    return staticServer.start(server.dir, server.port);
 }
 
 function capture(){
     var testServer = serve(config.server);
-    return nodeCasper([casperPath, '--configPath=' + configPath]).then(function closeServer(){
+    return nodeCasper([casperPath || './casper.js', '--configPath=' + configPath]).then(function closeServer(){
         return testServer && testServer.close();
     });
 }
@@ -98,15 +99,15 @@ function compareAndSaveDifference(file){
 function imageErrors(file, data){
     var errors = [];
     if (!data.isSameDimensions) {
-        if (data.dimensionDifference.width !== 0) {
+        if (data.dimensionDifference.width !== thresholds.width) {
             errors.push('the new image is wider/smaller: ' + data.dimensionDifference.width + 'px different');
         }
-        if (data.dimensionDifference.height !== 0) {
+        if (data.dimensionDifference.height !== thresholds.height) {
             errors.push('the new image is taller/smaller: ' + data.dimensionDifference.height + 'px different');
         }
         errors.push(file)
     }
-    if (data.misMatchPercentage > 0) {
+    if (data.misMatchPercentage > thresholds.misMatchPercentage) {
         errors.push('The new image content has changed: ' + data.misMatchPercentage + '% different');
         errors.push(file)
     }
