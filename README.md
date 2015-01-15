@@ -85,7 +85,7 @@ test:
     - gulp build
   override:
     - gulp test
-    - gulp sheut
+    - npm test
 dependencies:
   post:
     - npm install -g casperjs@1.1.0-beta3
