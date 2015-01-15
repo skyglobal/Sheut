@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+
+var argv = process.argv.slice(1);
+var cwd =  argv.shift();
+var sheut = require('../index');
+var chalk = require('chalk');
+var gutil = require('gulp-util');
+var shell = require("shelljs");
+var exec = shell.exec;
+var pkg = require("../package.json")
+    , version = pkg.version
+    , moduleName = pkg.name
+    , moduleDir = findThisModule();
+
+
+function findThisModule() {
+    return exec('npm config get prefix', {silent:true}).output.replace(/\s+$/g, '') + "/lib/node_modules/" + moduleName;
+}
+function error(err){
+    gutil.log([chalk.red('Sheut Error'), err.message].join("\n"));
+    process.exit(1)
+}
+
+var commands = {
+    capture: function(argv) {
+        sheut.capture().then(function success(){
+            gutil.log(chalk.green('Sheut: Images Captured'));
+        }, error);
+    },
+    accept: function(argv) {
+        sheut.accept().then(function success(){
+            gutil.log(chalk.green('Sheut: Images Accepted as reference shots'));
+        }, error);
+    },
+    clean: function(argv) {
+        sheut.clean().then(function success(){
+            gutil.log(chalk.green('Sheut: New and Different Images removed'));
+        }, error);
+    },
+    compare: function(argv) {
+        sheut.compare().then(function success(){
+            gutil.log(chalk.green('Sheut: New images match reference shots'));
+        }, error);
+    },
+    '--help': function help () {
+        console.log([
+            "Commands: capture, accept, clean, compare, --help, --version",
+            "Usage: sheut capture"
+        ].join("\n"));
+    },
+    '--version': function() {
+        console.log(version);
+    }
+};
+
+(function main() {
+    if (!argv.length) return commands.help();
+    var command = argv.shift();
+    commands[command] && commands[command](argv);
+    !commands[command] && commands.help();
+})();
+

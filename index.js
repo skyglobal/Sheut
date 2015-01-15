@@ -99,15 +99,15 @@ function compareAndSaveDifference(file){
 function imageErrors(file, data){
     var errors = [];
     if (!data.isSameDimensions) {
-        if (data.dimensionDifference.width !== thresholds.width) {
+        if (data.dimensionDifference.width !== (thresholds.width || 0)) {
             errors.push('the new image is wider/smaller: ' + data.dimensionDifference.width + 'px different');
         }
-        if (data.dimensionDifference.height !== thresholds.height) {
+        if (data.dimensionDifference.height !== (thresholds.height || 0)) {
             errors.push('the new image is taller/smaller: ' + data.dimensionDifference.height + 'px different');
         }
         errors.push(file)
     }
-    if (data.misMatchPercentage > thresholds.misMatchPercentage) {
+    if (data.misMatchPercentage > (thresholds.misMatchPercentage || 0)) {
         errors.push('The new image content has changed: ' + data.misMatchPercentage + '% different');
         errors.push(file)
     }
