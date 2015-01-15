@@ -126,7 +126,7 @@ function compare(){
             promises.push(compareAndSaveDifference(file));
         });
 
-        return Promise.all(promises).then(function(){ return {message: 'Sheut: Images Captured'}; });
+        return Promise.all(promises).then(function(){ return {message: 'Sheut: New images match reference shots'}; });
     });
 }
 
