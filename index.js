@@ -36,7 +36,8 @@ function serve(server){
 function capture(){
     var testServer = serve(config.server);
     return nodeCasper([casperPath || './casper.js', '--configPath=' + configPath]).then(function closeServer(){
-        return testServer && testServer.close();
+        testServer && testServer.close();
+        return {message: 'Sheut: Images Captured'};
     });
 }
 
@@ -44,7 +45,7 @@ function accept(){
     return new Promise(function(resolve, reject){
         fse.copy(paths.new, paths.reference, function(err){
             if (err) return reject(err);
-            resolve();
+            resolve({message: 'Sheut: Images Accepted as reference shots'});
         })
     });
 }
@@ -53,7 +54,7 @@ function accept(){
 function clean(){
     return new Promise(function(resolve, reject){
         del([paths.new, paths.different], function(){
-            resolve()
+            resolve({message: 'Sheut: New and Different Images removed'})
         });
     });
 }
@@ -90,7 +91,7 @@ function compareAndSaveDifference(file){
                     reject(err);
                 });
             } else {
-                resolve();
+                resolve({message: 'Sheut: Images Captured'});
             }
         });
     });
@@ -125,7 +126,7 @@ function compare(){
             promises.push(compareAndSaveDifference(file));
         });
 
-        return Promise.all(promises)
+        return Promise.all(promises).then(function(){ return {message: 'Sheut: Images Captured'}; });
     });
 }
 

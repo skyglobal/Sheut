@@ -20,27 +20,22 @@ function error(err){
     gutil.log([chalk.red('Sheut Error'), err.message].join("\n"));
     process.exit(1)
 }
+function success(err){
+    gutil.log(chalk.green(err.message));
+}
 
 var commands = {
     capture: function(argv) {
-        sheut.capture().then(function success(){
-            gutil.log(chalk.green('Sheut: Images Captured'));
-        }, error);
+        sheut.capture().then(success, error);
     },
     accept: function(argv) {
-        sheut.accept().then(function success(){
-            gutil.log(chalk.green('Sheut: Images Accepted as reference shots'));
-        }, error);
+        sheut.accept().then(success, error);
     },
     clean: function(argv) {
-        sheut.clean().then(function success(){
-            gutil.log(chalk.green('Sheut: New and Different Images removed'));
-        }, error);
+        sheut.clean().then(success, error);
     },
     compare: function(argv) {
-        sheut.compare().then(function success(){
-            gutil.log(chalk.green('Sheut: New images match reference shots'));
-        }, error);
+        sheut.compare().then(success, error);
     },
     '--help': function help () {
         console.log([
