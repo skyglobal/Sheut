@@ -46,7 +46,7 @@ Add the following to your package.json and run `npm run test:regression`
     "sheut:accept" : "sheut accept",
     "sheut:clean" : "sheut clean",
     "sheut:compare" : "sheut compare",
-    "test:regression" : "npm run sheut:clean && npm run sheut:capture && npm run sheut:compare"
+    "test:regression" : "sheut clean && sheut capture && sheut compare"
   }
 ```
 
