@@ -51,7 +51,7 @@ Add the following to your package.json and run `npm run test:regression`
 ```
 
 ## Gulp Example
-
+gulpfile.js
 ```javascript
 var gulp = require('gulp');
 var gutil = require('gulp-util');
@@ -82,7 +82,8 @@ gulp.task('sheut:compare', ['sheut:capture'], function(){
 ```
 
 ## CircleCI Example
-```
+circle.yml
+```yml
 test:
   pre:
     - npm install -g gulp
