@@ -38,7 +38,7 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
 
 ## NPM Example
 
-Add the following to your package.json and run `npm run test:regression`
+Add the following to your package.json and run `npm run test`
 
 ```json
   "scripts":{
