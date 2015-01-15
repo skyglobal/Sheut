@@ -40,7 +40,7 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
 
 Add the following to your package.json and run `npm run test:regression`
 
-```
+```json
   "scripts":{
     "sheut:capture" : "sheut capture",
     "sheut:accept" : "sheut accept",
@@ -52,28 +52,32 @@ Add the following to your package.json and run `npm run test:regression`
 
 ## Gulp Example
 
-```
+```javascript
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var sheut = require('sheut');
 
-gulp.task('clean', function(cb){
-    return sheut.clean();
+function error(err){
+    gulp.emit("error", err);
+}
+function success(err){
+    gutil.log(gutil.colors.green(err.message));
+}
+
+gulp.task('sheut:clean', function(){
+    return sheut.clean().then(success, error);
 });
 
-gulp.task('capture', ['clean'], function(cb){
-    return sheut.capture();
+gulp.task('sheut:capture', ['sheut:clean'], function(){
+    return sheut.capture().then(success, error);
 });
 
-gulp.task('accept', function(cb){
-    return sheut.accept();
+gulp.task('sheut:accept', function(){
+    return sheut.accept().then(success, error);
 });
 
-gulp.task('compare', ['capture'], function(cb){
-    return sheut.compare()
-        .then(function onSuccess(){
-        }, function onError(err){
-            gulp.emit("error", err);
-        });
+gulp.task('sheut:compare', ['sheut:capture'], function(){
+    return sheut.compare().then(success, error);
 });
 ```
 
