@@ -36,6 +36,20 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
    * `hideSelectors` : An array of selectors to hide (visibility:hidden)
    * `selectors` : An array of selectors to take test.  Saved screenshots will be trimmed to show only this selector.
 
+## NPM Example
+
+Add the following to your package.json and run `npm run test:regression`
+
+```
+  "scripts":{
+    "sheut:capture" : "sheut capture",
+    "sheut:accept" : "sheut accept",
+    "sheut:clean" : "sheut clean",
+    "sheut:compare" : "sheut compare",
+    "test:regression" : "npm run sheut:clean && npm run sheut:capture && npm run sheut:compare"
+  }
+```
+
 ## Gulp Example
 
 ```
