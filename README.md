@@ -25,6 +25,10 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
  * `server` : (optional) If provided Sheut will start a static server using the dir and port given. If omitted, Sheut will assume the server has already been started.
    * `dir`: The location of the site to serve.
    * `port`: the port to open the server on.
+ * `thresholds` : (optional) When making comparison, how much difference is allowed before an error is reported.
+   * `misMatchPercentage` : (default 0) 
+   * `height` : (default 0)
+   * `width` :  (default 0)
  * `screenshots` : (mandatory) The directory where to save the captured screens.
  * `viewport` : (mandatory) An array of sizes to test the give sites at.
    * `name` : Used to categorise the url and used in the filename of the save screen-shots.
@@ -38,9 +42,11 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
 
 ## NPM Example
 
-Add the following to your package.json and run `npm run test:regression`
+Add the following to your package.json and run `npm test`
 
 ```json
+{
+...
   "scripts":{
     "sheut:capture" : "sheut capture",
     "sheut:accept" : "sheut accept",
@@ -48,10 +54,27 @@ Add the following to your package.json and run `npm run test:regression`
     "sheut:compare" : "sheut compare",
     "test" : "sheut clean && sheut capture && sheut compare"
   }
+}
 ```
 
-## Gulp Example
+## CircleCI Example
+circle.yml
+```yml
+test:
+  pre:
+    - npm install -g gulp
+    - gulp build
+  override:
+    - gulp test
+    - npm test
+dependencies:
+  post:
+    - npm install -g casperjs@1.1.0-beta3
+```
 
+
+## Gulp Example
+gulpfile.js
 ```javascript
 var gulp = require('gulp');
 var gutil = require('gulp-util');
@@ -80,21 +103,6 @@ gulp.task('sheut:compare', ['sheut:capture'], function(){
     return sheut.compare().then(success, error);
 });
 ```
-
-## CircleCI Example
-```
-test:
-  pre:
-    - npm install -g gulp
-    - gulp build
-  override:
-    - gulp test
-    - npm test
-dependencies:
-  post:
-    - npm install -g casperjs@1.1.0-beta3
-```
-
 
 ### todo:
  * move remotely built screen-shots to aws on fail
