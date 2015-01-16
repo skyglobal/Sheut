@@ -42,7 +42,7 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
 
 ## NPM Example
 
-Add the following to your package.json and run `npm run test`
+Add the following to your package.json and run `npm test`
 
 ```json
   "scripts":{
