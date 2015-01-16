@@ -1,5 +1,9 @@
 # Change Log
   
+## 0.0.8
+
+ * Added CLI
+
 ## 0.0.7
 
  * Added configurable thresholds
