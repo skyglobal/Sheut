@@ -54,6 +54,22 @@ Add the following to your package.json and run `npm test`
   }
 ```
 
+## CircleCI Example
+circle.yml
+```yml
+test:
+  pre:
+    - npm install -g gulp
+    - gulp build
+  override:
+    - gulp test
+    - npm test
+dependencies:
+  post:
+    - npm install -g casperjs@1.1.0-beta3
+```
+
+
 ## Gulp Example
 gulpfile.js
 ```javascript
@@ -84,22 +100,6 @@ gulp.task('sheut:compare', ['sheut:capture'], function(){
     return sheut.compare().then(success, error);
 });
 ```
-
-## CircleCI Example
-circle.yml
-```yml
-test:
-  pre:
-    - npm install -g gulp
-    - gulp build
-  override:
-    - gulp test
-    - npm test
-dependencies:
-  post:
-    - npm install -g casperjs@1.1.0-beta3
-```
-
 
 ### todo:
  * move remotely built screen-shots to aws on fail
