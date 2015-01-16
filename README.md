@@ -45,6 +45,8 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
 Add the following to your package.json and run `npm test`
 
 ```json
+{
+...
   "scripts":{
     "sheut:capture" : "sheut capture",
     "sheut:accept" : "sheut accept",
@@ -52,6 +54,7 @@ Add the following to your package.json and run `npm test`
     "sheut:compare" : "sheut compare",
     "test" : "sheut clean && sheut capture && sheut compare"
   }
+}
 ```
 
 ## CircleCI Example
