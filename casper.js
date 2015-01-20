@@ -26,6 +26,11 @@ function createImageName(site, selector, viewport){
     return slugize(site) + '_' + slugize(selector) + '_' + slugize(viewport) + '.png'
 }
 
+if (config.debug) {
+    casper.options.verbose = true;
+    casper.options.logLevel = "debug";
+}
+
 casper.start().each(urls, function(self, link) {
     var site = sites[link];
 
@@ -43,23 +48,24 @@ casper.start().each(urls, function(self, link) {
             //});
             //this.then(function(){
             this.then(function(){
-                this.each(site.hideSelectors, function(self, selector){
-                    this.evaluate(function() {
-                        var elsToHide = document.querySelectorAll('.skycon');
-                        for (var el in elsToHide){
-                            elsToHide[el].setAttribute('style','visibility:hidden');
-                        }
+                if (site.hideSelectors) {
+                    this.each(site.hideSelectors, function(self, selector){
+                        this.evaluate(function() {
+                            var elsToHide = document.querySelectorAll('.skycon');
+                            for (var el in elsToHide){
+                                elsToHide[el].setAttribute('style','visibility:hidden');
+                            }
+                        });
                     });
-                });
+                }
 
                 this.each(site.selectors, function(self, selector){
-
                     self.waitForSelector(selector, (function() {
                         imageToCapture = createImageName(site.name, selector, viewport.name);
                         console.log("Saved screenshot " + imageToCapture);
                         self.captureSelector(paths.new + '/' + imageToCapture, selector);
                     }), (function() {
-                        self.die("Timeout reached. Fail whale?");
+                        self.die('Timeout reached. Try setting the debug property in the Sheut config to true to determine the problem.');
                         self.exit();
                     }), 12000);
                 });

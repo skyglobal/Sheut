@@ -1,5 +1,6 @@
 module.exports = {
-    server : {
+    debug: false,
+    server: {
         dir: '_site',
         port: 8888
     },
