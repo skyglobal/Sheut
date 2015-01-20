@@ -1,47 +1,45 @@
 module.exports = {
     debug: false,
-    server : {
+    server: {
         dir: '_site',
         port: 8888
     },
-    screenshots: 'src/test/screenshots/',
+    screenshots: './test/screenshots/',
     "viewports" : [
         {
-            "name": "iPhone portrait",
+            "name": "phone",
             "width": 320,
             "height": 480
         }
         ,{
-            "name": "iPhone landscape",
-            "width": 480,
-            "height": 320
-        }
-        ,{
-            "name": "iPad portrait",
-            "width": 768,
+            "name": "tablet_p",
+            "width": 568,
             "height": 1024
         }
         ,{
-            "name": "iPad landscape",
+            "name": "tablet_l",
             "width": 1024,
             "height": 768
         }
         ,{
             "name": "desktop",
-            "width": 1025,
-            "height": 800
+            "width": 1200,
+            "height": 900
         }
     ]
     ,"sites" : [
         {
-            "name": "homepage"
-            ,"url": "http://localhost:3001",
-            "hideSelectors": [
-                "footer",
-                ".section-trending-stories"
+            "name":"localhost"
+            ,"url":"http://localhost:8888"
+            ,"hideSelectors": [
+                '.skycon' //webfonts not supported on phantomjs1.9 :(
             ]
+            //,"removeSelectors": [
+            //    "#carbonads-container"
+            //]
             ,"selectors":[
-                "body"
+                ".share__bar .share__list"
+                ,".share__popup .share__summary"
             ]
         }
     ],
@@ -50,4 +48,4 @@ module.exports = {
         height: 0,
         width: 0
     }
-};
+}
