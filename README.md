@@ -22,6 +22,7 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
  
 ## sheut.config.js 
 
+ * `debug` : Boolean to determine if Casper's verbose logging is enabled
  * `server` : (optional) If provided Sheut will start a static server using the dir and port given. If omitted, Sheut will assume the server has already been started.
    * `dir`: The location of the site to serve.
    * `port`: the port to open the server on.
