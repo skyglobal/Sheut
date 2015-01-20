@@ -1,5 +1,9 @@
 # Change Log
   
+## 0.0.9
+
+ * Added Debug config option
+
 ## 0.0.8
 
  * Added CLI
