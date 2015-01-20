@@ -16,10 +16,12 @@ var pkg = require("../package.json")
 function findThisModule() {
     return exec('npm config get prefix', {silent:true}).output.replace(/\s+$/g, '') + "/lib/node_modules/" + moduleName;
 }
+
 function error(err){
     gutil.log([chalk.red('Sheut Error'), err.message].join("\n"));
     process.exit(1)
 }
+
 function success(err){
     gutil.log(chalk.green(err.message));
 }
