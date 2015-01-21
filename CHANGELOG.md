@@ -1,5 +1,10 @@
 # Change Log
   
+## 0.0.10
+
+ * Fixed `hideSelectors` option
+ * Updated how hidden selectors are handled (now skipped with a warning)
+
 ## 0.0.9
 
  * Added Debug config option
