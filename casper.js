@@ -50,20 +50,24 @@ casper.start().each(urls, function(self, link) {
             this.then(function(){
                 if (site.hideSelectors) {
                     this.each(site.hideSelectors, function(self, selector){
-                        this.evaluate(function() {
-                            var elsToHide = document.querySelectorAll('.skycon');
-                            for (var el in elsToHide){
+                        this.evaluate(function(selector) {
+                            var elsToHide = document.querySelectorAll(selector);
+                            for (var el in elsToHide) {
                                 elsToHide[el].setAttribute('style','visibility:hidden');
                             }
-                        });
+                        }, selector);
                     });
                 }
 
-                this.each(site.selectors, function(self, selector){
+                self.each(site.selectors, function(self, selector) {
                     self.waitForSelector(selector, (function() {
-                        imageToCapture = createImageName(site.name, selector, viewport.name);
-                        console.log("Saved screenshot " + imageToCapture);
-                        self.captureSelector(paths.new + '/' + imageToCapture, selector);
+                        if (self.getElementInfo(selector).visible) {
+                            imageToCapture = createImageName(site.name, selector, viewport.name);
+                            console.log("Saved screenshot", imageToCapture);
+                            self.captureSelector(paths.new + '/' + imageToCapture, selector);
+                        } else {
+                            console.warn(selector, 'on', site.name, 'isn\'t visible at', viewport.width, 'x', viewport.height, 'so no image has been captured');
+                        }
                     }), (function() {
                         self.die('Timeout reached. Try setting the debug property in the Sheut config to true to determine the problem.');
                         self.exit();
@@ -76,7 +80,7 @@ casper.start().each(urls, function(self, link) {
 
 casper.on('capture.saved', function(err) {
     if (imageToCapture === lastImageToCapture){
-        this.exit()
+        this.exit();
     }
 });
 
