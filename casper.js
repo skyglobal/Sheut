@@ -42,36 +42,33 @@ casper.start().each(urls, function(self, link) {
 
         this.thenOpen(link, function() {
 
-            //may need to do this if site has JS changing the page on load.
-            //    better to hook into browser events or something
-            //    this.wait(5000);
-            //});
-            //this.then(function(){
-            this.then(function(){
-                if (site.hideSelectors) {
-                    this.each(site.hideSelectors, function(self, selector){
-                        this.evaluate(function(selector) {
-                            var elsToHide = document.querySelectorAll(selector);
-                            for (var el in elsToHide) {
-                                elsToHide[el].setAttribute('style','visibility:hidden');
-                            }
-                        }, selector);
-                    });
-                }
+            this.waitForSelector(config.waitForSelector || 'html', function() {
+                this.then(function(){
+                    if (site.hideSelectors) {
+                        this.each(site.hideSelectors, function(self, selector){
+                            this.evaluate(function(selector) {
+                                var elsToHide = document.querySelectorAll(selector);
+                                for (var el in elsToHide) {
+                                    elsToHide[el].setAttribute('style','visibility:hidden');
+                                }
+                            }, selector);
+                        });
+                    }
 
-                self.each(site.selectors, function(self, selector) {
-                    self.waitForSelector(selector, (function() {
-                        if (self.getElementInfo(selector).visible) {
-                            imageToCapture = createImageName(site.name, selector, viewport.name);
-                            console.log("Saved screenshot", imageToCapture);
-                            self.captureSelector(paths.new + '/' + imageToCapture, selector);
-                        } else {
-                            console.warn(selector, 'on', site.name, 'isn\'t visible at', viewport.width, 'x', viewport.height, 'so no image has been captured');
-                        }
-                    }), (function() {
-                        self.die('Timeout reached. Try setting the debug property in the Sheut config to true to determine the problem.');
-                        self.exit();
-                    }), 12000);
+                    self.each(site.selectors, function(self, selector) {
+                        self.waitForSelector(selector, (function() {
+                            if (self.getElementInfo(selector).visible) {
+                                imageToCapture = createImageName(site.name, selector, viewport.name);
+                                console.log("Saved screenshot", imageToCapture);
+                                self.captureSelector(paths.new + '/' + imageToCapture, selector);
+                            } else {
+                                console.warn(selector, 'on', site.name, 'isn\'t visible at', viewport.width, 'x', viewport.height, 'so no image has been captured');
+                            }
+                        }), (function() {
+                            self.die('Timeout reached. Try setting the debug property in the Sheut config to true to determine the problem.');
+                            self.exit();
+                        }), 12000);
+                    });
                 });
             });
         });
