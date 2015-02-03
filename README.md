@@ -23,6 +23,7 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
 ## sheut.config.js 
 
  * `debug` : (optional) Boolean to determine if Casper's verbose logging is enabled
+ * `waitForSelector` : (optional) waits for a CSS selector to be attached to a DOM element before capturing each screenshot. Could be useful if you're waiting for JavaScript to update elements in your page.
  * `server` : (optional) If provided Sheut will start a static server using the dir and port given. If omitted, Sheut will assume the server has already been started.
    * `dir`: The location of the site to serve.
    * `port`: the port to open the server on.
