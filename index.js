@@ -118,10 +118,18 @@ function imageErrors(file, data){
 
 function compare(){
     return findFiles(paths.reference).then(function(files){
-        var promises = [];
-        var file_list = files.split('\n');
+        
+        if (!files || !files.length) {
+            console.error('No references were found to compare the new screenshots to. Please accept the previously generated screenshots with `Sheut.accept()`');
+            process.exit(1);
+        }
+
+        var promises = [],
+            file_list = files.split('\n');
+
         file_list.shift();
         file_list.pop();
+
         file_list.forEach(function(file){
             promises.push(compareAndSaveDifference(file));
         });
