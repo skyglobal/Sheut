@@ -27,7 +27,7 @@
     "paths"
   ],
   "dependencies": {
-    "canvas": "^1.1.6",
+    "canvas": "^1.2.1",
     "casper": "^0.1.1",
     "chalk": "^0.5.1",
     "del": "^1.1.1",
