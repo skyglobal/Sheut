@@ -1,6 +1,6 @@
 # Change Log
   
-## 0.1.0
+## 0.0.11
 
  * Added `waitForSelector` option to allow people to wait for any potential js changes to take affect.
 
