@@ -1,5 +1,9 @@
 # Change Log
   
+## 0.1.0
+
+ * Added `waitForSelector` option to allow people to wait for any potential js changes to take affect.
+
 ## 0.0.10
 
  * Fixed `hideSelectors` option
