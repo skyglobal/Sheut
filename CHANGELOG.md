@@ -1,5 +1,9 @@
 # Change Log
-  
+
+## 0.0.12
+
+ * Updated canvas dependency to target 1.2.1, which does not fail to install on OSX
+
 ## 0.0.11
 
  * Added `waitForSelector` option to allow people to wait for any potential js changes to take affect.
