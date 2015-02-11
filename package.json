@@ -1,6 +1,6 @@
 {
   "name": "sheut",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "description": "Take and Compare screenshots",
   "main": "index.js",
   "keywords": [],
