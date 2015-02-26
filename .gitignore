@@ -3,6 +3,7 @@
 .tmp/
 tmp/
 _site/
+test/
 node_modules/
 npm-debug.log
 *.iml
