@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.13
+
+ * Adding documentation to config file, and providing a basic local site that will help trying out features
+
 ## 0.0.12
 
  * Updated canvas dependency to target 1.2.1, which does not fail to install on OSX
