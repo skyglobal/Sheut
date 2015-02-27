@@ -23,6 +23,14 @@ var resemble = require('./wrappers/resemble');
 var nodeCasper = require('./wrappers/casper');
 var staticServer = require('./wrappers/server');
 
+// Backwards compatibility
+config.screenshotsRoot = config.screenshotsRoot ? config.screenshotsRoot : config.screenshots;
+
+if (!config.screenshotsRoot) {
+    console.error('Please configure the screenshotsRoot directory to save your screenshots.');
+    process.exit(1);
+}
+
 var paths = {
     new: path.join(config.screenshotsRoot, 'new'),
     different: path.join(config.screenshotsRoot, 'different'),
