@@ -24,7 +24,7 @@ module.exports = {
 
     // directory under which all screenshots
     //  are taken and compared.
-    screenshots: './test/screenshots/',
+    screenshotsRoot: './test/screenshots/',
 
     // set here all the viewports you will
     //  need to screenshot. A screenshot
