@@ -1,8 +1,12 @@
 # Change Log
 
-## 0.0.13
+## 0.0.14
 
  * Added filtering of files: if reference files exist but no comparison file is present in the 'new' directory, the compare method now doesn't error out. Instead, it shows which files are 'orphaned' and continues on.
+
+## 0.0.13
+
+ * Adding documentation to config file, and providing a basic local site that will help trying out features
 
 ## 0.0.12
 
