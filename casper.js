@@ -13,9 +13,9 @@ var urls = config.sites.map(function(site){
 });
 
 var paths = {
-    new: config.screenshots + '/new',
-    different: config.screenshots + '/different',
-    reference: config.screenshots + '/reference'
+    new: config.screenshotsRoot + '/new',
+    different: config.screenshotsRoot + '/different',
+    reference: config.screenshotsRoot + '/reference'
 };
 
 function slugize(name){
