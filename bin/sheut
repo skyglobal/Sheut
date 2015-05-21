@@ -1,59 +1,71 @@
 #!/usr/bin/env node
 
-var argv = process.argv.slice(1);
-var cwd =  argv.shift();
-var sheut = require('../index');
-var gutil = require('gulp-util');
-var chalk = gutil.colors;
-var shell = require("shelljs");
-var exec = shell.exec;
-var pkg = require("../package.json")
-    , version = pkg.version
-    , moduleName = pkg.name
-    , moduleDir = findThisModule();
-
-
-function findThisModule() {
-    return exec('npm config get prefix', {silent:true}).output.replace(/\s+$/g, '') + "/lib/node_modules/" + moduleName;
-}
+var argv = process.argv.slice(1),
+    cwd =  argv.shift(),
+    Sheut = require('../index'),
+    gutil = require('gulp-util'),
+    chalk = gutil.colors,
+    pkg = require("../package.json"),
+    commands = {
+        accept: true,
+        capture: true,
+        clean: true,
+        compare: true
+    },
+    configPath;
 
 function error(err){
     gutil.log([chalk.red('Sheut Error'), err.message].join("\n"));
-    process.exit(1)
+    process.exit(1);
 }
 
 function success(err){
     gutil.log(chalk.green(err.message));
 }
 
-var commands = {
-    capture: function(argv) {
-        sheut.capture().then(success, error);
-    },
-    accept: function(argv) {
-        sheut.accept().then(success, error);
-    },
-    clean: function(argv) {
-        sheut.clean().then(success, error);
-    },
-    compare: function(argv) {
-        sheut.compare().then(success, error);
-    },
-    '--help': function help () {
-        console.log([
-            "Commands: capture, accept, clean, compare, --help, --version",
-            "Usage: sheut capture"
-        ].join("\n"));
-    },
-    '--version': function() {
-        console.log(version);
-    }
-};
+function findCommand(argv) {
+    var command = null;
+
+    argv.forEach(function(name) {
+        if (name.match(/--config=/)) {
+            configPath = name.split('=')[1];
+        }
+
+        if (name.match(/--help/)) {
+            help();
+            return null;
+        }
+
+        if (name.match(/--version/)) {
+            console.log(pkg.version);
+            return null;
+        }
+
+        if (commands[name]) {
+            command = name;
+        }
+    });
+
+    return command;
+}
+
+function help() {
+    console.log([
+        "Commands: capture, accept, clean, compare, --help, --version",
+        "Usage: sheut capture"
+    ].join("\n"));
+}
 
 (function main() {
-    if (!argv.length) return commands.help();
-    var command = argv.shift();
-    commands[command] && commands[command](argv);
-    !commands[command] && commands.help();
+    if (!argv.length) return help();
+    var command = findCommand(argv),
+        sheut;
+
+    if (command) {
+        sheut = new Sheut(configPath);
+        sheut[command]().then(success, error);
+    } else {
+        help();
+    }
 })();
 
