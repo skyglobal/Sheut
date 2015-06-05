@@ -56,6 +56,13 @@ module.exports = {
         }
     ],
 
+    // Add here selectors that would be hidden
+    // with 'visibility: hidden' before capturing
+    // these apply to all sites in the test suite
+    'hideSelectors': [
+        '.hide-me-globally'
+    ],
+
     // An array of sites to capture screenshots from
     sites : [
         {
@@ -63,7 +70,8 @@ module.exports = {
             'url':'http://localhost:8888',
 
             // Add here selectors that would be hidden
-            //  with 'display: none' before capturing
+            //  with 'visibility: hidden' before capturing
+            // this applys solely to this test
             'hideSelectors': [
                 '.hide-me-from-sheut'
             ],
@@ -72,6 +80,35 @@ module.exports = {
             'selectors':[
                 '.container-1',
                 '.container-2 .nested'
+            ],
+
+            // determine the viewports against which this test
+            // should run. If this property isn't specified,
+            // the test will be run against all of the
+            // viewports above.
+            viewports: [
+                'phone',
+                'tablet_p'
+            ]
+        },
+        {
+            'name':'localhost',
+            'url':'http://localhost:8888/page2',
+
+
+            // Add here selectors for elements to be captured
+            'selectors':[
+                '.container-1',
+                '.container-2 .nested'
+            ],
+
+            // determine the viewports against which this test
+            // should run. If this property isn't specified,
+            // the test will be run against all of the
+            // viewports above.
+            viewports: [
+                'tablet_l',
+                'desktop'
             ]
         },
         {
