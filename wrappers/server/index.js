@@ -13,8 +13,8 @@ function start(dir, port){
         var done = finalhandler(req, res);
         serve(req, res, function onNext(err) {
             if (err) return done(err);
-            index(req, res, done)
-        })
+            index(req, res, done);
+        });
     });
     server.listen(port);
     return server;

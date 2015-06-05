@@ -23,7 +23,7 @@ function slugize(name){
 }
 
 function createImageName(site, selector, viewport){
-    return slugize(site) + '_' + slugize(selector) + '_' + slugize(viewport) + '.png'
+    return slugize(site) + '_' + slugize(selector) + '_' + slugize(viewport) + '.png';
 }
 
 if (config.debug) {
@@ -33,8 +33,15 @@ if (config.debug) {
 
 casper.start().each(urls, function(self, link) {
     var site = sites[link];
+    var viewports = config.viewports;
 
-    self.each(config.viewports, function(self, viewport){
+    if (site.ignoredViewports) {
+        viewports = config.viewports.filter(function (viewport) {
+            return site.ignoredViewports.indexOf(viewport.name) === -1;
+        });
+    }
+
+    self.each(viewports, function(self, viewport){
 
         this.then(function() {
             this.viewport(viewport.width, viewport.height);
@@ -44,16 +51,20 @@ casper.start().each(urls, function(self, link) {
 
             this.waitForSelector(config.waitForSelector || 'html', function() {
                 this.then(function(){
+                    var hideSelectors = config.hideSelectors || [];
+
                     if (site.hideSelectors) {
-                        this.each(site.hideSelectors, function(self, selector){
-                            this.evaluate(function(selector) {
-                                var elsToHide = document.querySelectorAll(selector);
-                                for (var el in elsToHide) {
-                                    elsToHide[el].setAttribute('style','visibility:hidden');
-                                }
-                            }, selector);
-                        });
+                        hideSelectors = hideSelectors.concat(site.hideSelectors);
                     }
+                    
+                    this.each(hideSelectors, function(self, selector) {
+                        this.evaluate(function(selector) {
+                            var elsToHide = document.querySelectorAll(selector);
+                            for (var el in elsToHide) {
+                                elsToHide[el].setAttribute('style','visibility:hidden');
+                            }
+                        }, selector);
+                    });
 
                     self.each(site.selectors, function(self, selector) {
                         self.waitForSelector(selector, (function() {

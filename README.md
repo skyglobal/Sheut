@@ -22,25 +22,27 @@ Sheut [![NPM version](http://img.shields.io/npm/v/sheut.svg)](https://www.npmjs.
  
 ## sheut.config.js 
 
- * `debug` : (optional) Boolean to determine if Casper's verbose logging is enabled
- * `waitForSelector` : (optional) waits for a CSS selector to be attached to a DOM element before capturing each screenshot. Could be useful if you're waiting for JavaScript to update elements in your page.
- * `server` : (optional) If provided Sheut will start a static server using the dir and port given. If omitted, Sheut will assume the server has already been started.
-   * `dir`: The location of the site to serve.
-   * `port`: the port to open the server on.
- * `thresholds` : (optional) When making comparison, how much difference is allowed before an error is reported.
-   * `misMatchPercentage` : (default 0) 
-   * `height` : (default 0)
-   * `width` :  (default 0)
- * `screenshots` : (mandatory) The directory where to save the captured screens.
- * `viewport` : (mandatory) An array of sizes to test the give sites at.
-   * `name` : Used to categorise the url and used in the filename of the save screen-shots.
-   * `height` : The height of the browser.
-   * `width` : The width of the browser.
- * `sites` : (mandatory) An array of URLs to test.
-   * `name` : Used to categorise the url and used in the filename of the save screen-shots.
-   * `url` : The url to test
-   * `hideSelectors` : An array of selectors to hide (visibility:hidden)
-   * `selectors` : An array of selectors to take test.  Saved screenshots will be trimmed to show only this selector.
+ * `debug`: (optional) Boolean to determine if Casper's verbose logging is enabled
+ * `waitForSelector`: (optional) waits for a CSS selector to be attached to a DOM element before capturing each screenshot. Could be useful if you're waiting for JavaScript to update elements in your page
+ * `server`: (optional) If provided Sheut will start a static server using the dir and port given. If omitted, Sheut will assume the server has already been started
+   * `dir`: The location of the site to serve
+   * `port`: the port on which to open the server
+ * `thresholds`: (optional) When making comparison, how much difference is allowed before an error is reported.
+   * `misMatchPercentage`: (default 0) 
+   * `height`: (default 0)
+   * `width`:  (default 0)
+ * `screenshots`: (mandatory) The directory where to save the captured screens.
+ * `hideSelectors`: An array of selectors to be hidden in **all** tests (visibility: hidden)
+ * `viewports`: (mandatory) An array of resolutions at which to test the sites
+   * `name`: Used to categorise the url and used in the filename of the save screenshots
+   * `height`: The height of the browser.
+   * `width`: The width of the browser.
+ * `sites`: (mandatory) An array of URLs to test.
+   * `name`: Used to categorise the url and used in the filename of the save screenshots
+   * `url`: The url to test
+   * `hideSelectors`: An array of selectors to be hidden (visibility: hidden)
+   * `selectors`: An array of selectors to take test. Saved screenshots will be trimmed to show only this selector
+   * `ignoredViewports`: An array of viewport names that will be skipped for this test. If not specified, this test will run against all viewports
 
 ## NPM Example
 
@@ -50,11 +52,11 @@ Add the following to your package.json and run `npm test`
 {
 ...
   "scripts":{
-    "sheut:capture" : "sheut capture",
-    "sheut:accept" : "sheut accept",
-    "sheut:clean" : "sheut clean",
-    "sheut:compare" : "sheut compare",
-    "test" : "sheut clean && sheut capture && sheut compare"
+    "sheut:capture": "sheut capture",
+    "sheut:accept": "sheut accept",
+    "sheut:clean": "sheut clean",
+    "sheut:compare": "sheut compare",
+    "test": "sheut clean && sheut capture && sheut compare"
   }
 }
 ```
