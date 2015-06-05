@@ -17,7 +17,11 @@ var Promise = require('es6-promise').Promise,
 
 
 var Sheut = function(configFilePath) {
-    this.configPath = configFilePath || findup('sheut.config.js');
+    this.configPath = findup('sheut.config.js');
+
+    if (!this.configPath) {
+        this.configPath = path.join(process.cwd(), configFilePath);
+    }
 
     if (!fs.existsSync(this.configPath)) {
         console.log('Please add a sheut.config.js file in your root.');

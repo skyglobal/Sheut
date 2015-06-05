@@ -59,7 +59,7 @@ module.exports = {
     // Add here selectors that would be hidden
     // with 'visibility: hidden' before capturing
     // these apply to all sites in the test suite
-    'hideSelectors': [
+    hideSelectors: [
         '.hide-me-globally'
     ],
 
@@ -82,33 +82,29 @@ module.exports = {
                 '.container-2 .nested'
             ],
 
-            // determine the viewports against which this test
-            // should run. If this property isn't specified,
-            // the test will be run against all of the
-            // viewports above.
-            viewports: [
-                'phone',
-                'tablet_p'
+            // determine which viewports are ignored
+            // in this test
+            ignoredViewports: [
+                'tablet_l',
+                'desktop'
             ]
         },
         {
-            'name':'localhost',
-            'url':'http://localhost:8888/page2',
-
+            'name':'page two',
+            'url':'http://localhost:8888/page2.html',
 
             // Add here selectors for elements to be captured
             'selectors':[
-                '.container-1',
-                '.container-2 .nested'
+                '.container-1'
             ],
 
             // determine the viewports against which this test
             // should run. If this property isn't specified,
             // the test will be run against all of the
             // viewports above.
-            viewports: [
-                'tablet_l',
-                'desktop'
+            ignoredViewports: [
+                'tablet_p',
+                'phone'
             ]
         },
         {
