@@ -1,6 +1,6 @@
 {
   "name": "sheut",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Take and Compare screenshots",
   "main": "index.js",
   "keywords": [],
@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git@github.com:skyglobal/Sheut.git"
   },
-  "author": "Peter Moualnd <peter.mouland@gmail.com>",
+  "author": "Peter Mouland <peter.mouland@gmail.com>",
   "license": "BSD3",
   "bugs": {
     "url": "https://github.com/skyglobal/sheut/issues"
